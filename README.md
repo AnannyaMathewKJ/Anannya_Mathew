@@ -1,4 +1,4 @@
-# Week1_Anannya_Mathew : Python, Linear Algebra & Statistics
+# Data Science Internship
 A thorough foundational set of tasks encompassing fundamental data engineering and mathematical concepts needed for deep machine learning implementations may be found in this repository. In order to concentrate on the underlying structural code mechanics, each section stays away from opaque black-box framework logic.
 
 ## 📁 Repository Structure
