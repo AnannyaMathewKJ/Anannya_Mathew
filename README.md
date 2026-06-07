@@ -123,3 +123,62 @@ $$\hat{Y}_{\text{Absolute}} = Y_{t-1} + \hat{\Delta Y}_t$$
 
 1. **Exogenous Feature Integration:** Incorporate global macroeconomic signals, including consumer price indices (CPI), electric vehicle battery raw material costs, and regional interest rate updates.
 2. **Hybrid Model Architectures:** Implement deep learning sequence models (`LSTM`, `GRU`) paired with linear trend-residual structural decompositions.
+
+# **Week 3 Task**
+## 📌 Project Overview
+
+The objective of this project is to categorize entities (countries/macro-profiles) into distinct socio-economic or behavioral segments and build a predictive system capable of reverse-engineering those segments using classification models. 
+
+The system operates in two core phases:
+1. **Unsupervised Profiling:** Identifies natural clusters within the multi-dimensional dataset based on financial, health, and development metrics.
+2. **Supervised Actionable Intelligence:** Uses tree-based ensemble models to predict these cluster assignments and maps feature importance to discover the primary drivers behind the segmentation boundaries.
+
+---
+
+## 📊 Dataset Profile
+
+* **Source:** Kaggle Unsupervised Learning on Country Data
+* **Dimensions:** 167 rows, 10 columns
+* **Data Integrity:** 0 missing values, 0 duplicate rows detected
+* **Key Features:** `child_mort`, `exports`, `health`, `imports`, `income`, `inflation`, `life_expec`, `total_fer`, `gdpp`
+
+---
+
+## ⚙️ Pipeline Architecture
+
+### 1. Data Ingestion & Preprocessing
+* Automated dataset download integrated directly via `kagglehub`.
+* Non-numeric identifiers (`country`) are isolated, and numeric features are scaled using `StandardScaler` to handle distance distortion in clustering.
+
+### 2. Clustering Analysis
+* **K-Means Clustering:** Optimized using the Elbow Method and Silhouette Analysis over a range of $k \in [2, 10]$[cite: 1]. An optimal split of $k=3$ groups data into strategic tiers.
+* **DBSCAN Clustering:** Used alongside K-Means to analyze localized continuous density space and flag extreme behavioral outliers/noise[cite: 1].
+
+### 3. Supervised Classification & Interpretation
+* The data is partitioned into a 75/25 train-test split, preserving cluster proportions via stratification.
+* **Random Forest Classifier:** Trained with 100 estimators to establish a solid baseline map of cluster geometry.
+* **XGBoost Classifier:** Deployed to maximize predictive convergence and extract gradient-boosted feature importance maps.
+
+---
+
+## 📈 Model Performance & Insights
+
+### Performance Summary
+* **Random Forest:** Achieved an overall classification accuracy of **98%** on unseen test data.
+* **XGBoost:** Reached an accuracy profile of **98%**, perfectly capturing the geometric boundaries carved out by the clustering algorithms.
+
+### Actionable Driving Factors
+According to the tree-based split logs, the top predictors driving the definition of profile segments are[cite: 1]:
+1. **`child_mort`** (Importance Score: ~0.5376)
+2. **`life_expec`** (Importance Score: ~0.1042)
+3. **`gdpp`** (Importance Score: ~0.0958)
+4. **`income`** (Importance Score: ~0.0938)
+
+---
+
+## 🛠️ Installation & Usage
+
+To run this project directly in a Google Colab or local Jupyter notebook environment, ensure you have the following dependencies installed:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn xgboost kagglehub
