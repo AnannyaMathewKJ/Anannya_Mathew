@@ -182,3 +182,54 @@ To run this project directly in a Google Colab or local Jupyter notebook environ
 
 ```bash
 pip install pandas numpy matplotlib seaborn scikit-learn xgboost kagglehub
+```
+# Week 4 Task
+
+## 📌 Project Overview
+This project focuses on the implementation and comparative evaluation of deep learning architectures for image classification using the **CIFAR-10 dataset**. The workflow transitions from a baseline Artificial Neural Network (ANN) to a deep Convolutional Neural Network (CNN) to demonstrate how preserving spatial structures and utilizing targeted regularization optimization pathways dramatically improves model generalization and performance.
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+* **Deep Learning Framework:** `TensorFlow`, `Keras`
+* **Data Processing & Manipulation:** `NumPy`, `Pandas`
+* **Visualization & Performance Analytics:** `Matplotlib`, `Seaborn`
+
+---
+
+## 🚀 Pipeline Architecture
+
+### 1. Ingestion & Preprocessing
+* Automated loading of the CIFAR-10 dataset ($32 \times 32 \times 3$ color images across 10 target classes).
+* Normalized raw pixel intensity channels to a $[0, 1]$ scale to stabilize gradient steps during backpropagation.
+* Implemented operational **Data Augmentation** techniques (including random rotations, horizontal flips, and width/height shifts) to artificially expand training sample diversity and reduce overfitting.
+
+### 2. Baseline Model: Artificial Neural Network (ANN)
+* **Structural Design:** Composed of fully connected (`Dense`) hidden layers.
+* **Limitation:** Requires flattening the 3D image arrays into a single 1D vector of 3,072 features ($32 \times 32 \times 3$). This destroys the local pixel topology and spatial relationships within the image, causing a massive parameter explosion that leads to rapid overfitting.
+
+### 3. Advanced Model: Convolutional Neural Network (CNN)
+* **Structural Design:** Built using alternating Convolutional (`Conv2D`) layers and Max Pooling (`MaxPooling2D`) dimensions.
+* **Mechanism:** Employs sliding kernels to capture local receptive fields, systematically learning a hierarchical representation of features—ranging from low-level edges and textures to complex high-level shapes and object patterns.
+* **Efficiency:** Leverages weight sharing across spatial coordinates to structurally minimize the total parameter count compared to the fully connected alternative.
+
+### 4. Regularization & Optimization Layer
+* **Batch Normalization:** Scaled hidden layer activations to mitigate internal covariate shift, leading to faster convergence and smoother loss landscapes.
+* **Dropout:** Randomly deactivated a set percentage of neurons during training batch iterations to break up co-dependency patterns and force the network to learn robust, redundant features.
+* **Early Stopping:** Configured structural validation monitoring loops to track performance and safely halt training updates before validation error began to diverge.
+
+---
+
+## 📊 Comparative Performance & Insights
+
+| Evaluation Vector | Artificial Neural Network (ANN) | Convolutional Neural Network (CNN) |
+| :--- | :--- | :--- |
+| **Spatial Awareness** | None (Flattens structural inputs into 1D) | High (Preserves 2D/3D spatial neighborhood topology) |
+| **Parameter Efficiency** | Inefficient (Susceptible to parameter explosion) | Highly Efficient (Utilizes translation-invariant weight sharing) |
+| **Generalization Gap** | High (Prone to memorizing training set noise) | Low (Maintains balanced validation boundaries) |
+| **Classification Accuracy**| Baseline performance constraints | Significantly superior overall accuracy and stability |
+
+### Key Technical Takeaways:
+1. **Topology Preservation:** Traditional ANNs are inherently limited for computer vision problems because flattening operations discard essential spatial context.
+2. **Optimization Engineering:** Deep architectures require an intentional application of **Data Augmentation**, **Batch Normalization**, and **Dropout** to manage variance and perform effectively on unseen, real-world data distributions.
+3. **Core Competence:** This project completes the foundational pipeline requirements for deep learning deployments, demonstrating end-to-end fluency in hyperparameter tuning, debugging training curves, and structural neural network optimization.
